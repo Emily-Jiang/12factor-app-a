@@ -242,6 +242,34 @@
             <properties>
                 <mvn.extension></mvn.extension>
             </properties>
+	</profile>
+        <profile>
+            <id>docker-image</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.spotify</groupId>
+                        <artifactId>dockerfile-maven-plugin</artifactId>
+                        <version>1.4.5</version>
+                        <executions>
+                            <execution>
+                                <id>build-docker-image</id>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+		            <dockerfile.verbose>true</dockerfile.verbose>
+                            <repository>openliberty-${project.artifactId}</repository>
+                            <tag>${project.version}</tag>
+			    <buildArgs>
+				<PACKAGE_FILE>${project.artifactId}-${project.version}.zip</PACKAGE_FILE>
+			    </buildArgs>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <!-- Start system service before running tests -->
         <profile>
