@@ -158,7 +158,7 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>install-app</id>
+                        <id>install-apps</id>
                         <phase>package</phase>
                         <goals>
                             <goal>install-apps</goal>
