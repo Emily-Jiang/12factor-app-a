@@ -1,4 +1,4 @@
-FROM open-liberty:webProfile7
+FROM open-liberty:microProfile2
 MAINTAINER IBM Java engineering at IBM Cloud
 ARG LICENSE_JAR_URL
 RUN \ 

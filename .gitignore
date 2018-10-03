@@ -11,6 +11,6 @@
 .*.swp
 .DS_Store
 /src/main/liberty/config/server.env
-
+.vscode/
 src/main/liberty/config/server.env
 src/main/resources/localdev-config.json

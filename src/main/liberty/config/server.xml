@@ -1,7 +1,7 @@
 <server description="Sample Liberty server">
 
   <featureManager>
-      <feature>microprofile-1.2</feature>
+      <feature>microprofile-2.0</feature>
       <!--feature>usr:opentracingZipkin-0.30</feature-->
   </featureManager>
 
