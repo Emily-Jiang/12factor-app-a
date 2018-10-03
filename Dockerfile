@@ -1,6 +1,5 @@
 FROM open-liberty:webProfile7
 MAINTAINER IBM Java engineering at IBM Cloud
-COPY /target/liberty/wlp/usr/servers/defaultServer /config/
 ARG LICENSE_JAR_URL
 RUN \ 
   if [ $LICENSE_JAR_URL ]; then \
@@ -9,3 +8,4 @@ RUN \
     && rm /tmp/license.jar; \
   fi
 RUN apt-get update -y && apt-get install -y curl
+COPY /target/liberty/wlp/usr/servers/defaultServer /config/
