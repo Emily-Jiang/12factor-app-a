@@ -1,11 +1,13 @@
 FROM open-liberty:microProfile2
 MAINTAINER IBM Java engineering at IBM Cloud
-ARG LICENSE_JAR_URL
-RUN \ 
-  if [ $LICENSE_JAR_URL ]; then \
-    wget $LICENSE_JAR_URL -O /tmp/license.jar \
-    && java -jar /tmp/license.jar -acceptLicense /opt/ibm \
-    && rm /tmp/license.jar; \
-  fi
-RUN apt-get update -y && apt-get install -y curl
-COPY /target/liberty/wlp/usr/servers/defaultServer /config/
+ARG PACKAGE_FILE
+COPY target/$PACKAGE_FILE /config/
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends unzip curl\
+    && unzip /config/$PACKAGE_FILE \
+    && cp -r /wlp/usr/servers/defaultServer/* /config/ \
+    && rm -rf /config/wlp \
+    && rm -rf /config/$PACKAGE_FILE \
+    && apt-get remove -y unzip
+
+EXPOSE 9080 9443
