@@ -1,5 +1,4 @@
-# 12factor-app-a
-Intructions to Run this sample
+# Intructions to Run this sample
 1. clone this repo
 1. build this app 
    `mvn clean install`
