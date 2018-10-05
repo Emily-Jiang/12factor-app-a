@@ -222,8 +222,8 @@
         </plugins>
     </build>
 
-<profiles>
-<!-- mvn.cmd for windows systems -->
+    <profiles>
+        <!-- mvn.cmd for windows systems -->
         <profile>
             <id>windowsExtension</id>
             <activation>
@@ -242,7 +242,7 @@
             <properties>
                 <mvn.extension></mvn.extension>
             </properties>
-	</profile>
+        </profile>
         <profile>
             <id>docker-image</id>
             <build>
@@ -260,12 +260,12 @@
                             </execution>
                         </executions>
                         <configuration>
-		            <dockerfile.verbose>true</dockerfile.verbose>
+                            <dockerfile.verbose>true</dockerfile.verbose>
                             <repository>openliberty-${project.artifactId}</repository>
                             <tag>${project.version}</tag>
-			    <buildArgs>
-				<PACKAGE_FILE>${project.artifactId}-${project.version}.zip</PACKAGE_FILE>
-			    </buildArgs>
+                            <buildArgs>
+                                <PACKAGE_FILE>${project.artifactId}-${project.version}.zip</PACKAGE_FILE>
+                            </buildArgs>
                         </configuration>
                     </plugin>
                 </plugins>
