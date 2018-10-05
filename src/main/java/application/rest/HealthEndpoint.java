@@ -34,11 +34,11 @@ public class HealthEndpoint implements HealthCheck, ServletContextListener {
     HealthCheckResponse hcr;
 
     if (healthy) {
-      hcr = HealthCheckResponse.named("serviceB")
+      hcr = HealthCheckResponse.named("serviceA")
                                 .withData("lifetime", lifetime)
                                 .up().build();
     } else {
-      hcr = HealthCheckResponse.named("serviceB")
+      hcr = HealthCheckResponse.named("serviceA")
                                 .withData("lifetime", lifetime)
                                 .down().build();
     }
