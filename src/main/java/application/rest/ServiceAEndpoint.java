@@ -14,56 +14,39 @@ import javax.ws.rs.core.MediaType;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Retry;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 @RequestScoped
 @Path("a")
 public class ServiceAEndpoint {
 
-    @Inject
-    @ConfigProperty(name = "svcBHost", defaultValue = "localhost")
-    private String serviceBHost;
-
-    @Inject
-    @ConfigProperty(name = "svcBPort", defaultValue = "9081")
-    private String serviceBPort;
-
-    StringBuilder url;
+    @Inject @ConfigProperty(name="application.rest.ServiceBClient/mp-rest/url") String url;
     static int callCount;
     int tries;
+
+    @Inject @RestClient ServiceBClient client;
 
     @GET
     @Retry
     @Fallback(fallbackMethod="serviceAFallback")
     @Produces(MediaType.TEXT_PLAIN)
     public String callServiceB() {
-
       ++callCount;
       ++tries;
-
-      url = new StringBuilder();
-      url.append("http://")
-          .append(serviceBHost)
-          .append(":")
-          .append(serviceBPort)
-          .append("/demo/b");
-
-      return "Hello from serviceA (" + this + ")\n" + callService(url);
+      return "Hello from serviceA (" + this + ")\n " + callService();
     }
 
     public String serviceAFallback() {
-
-        return "Hello from serviceAFallback at " + new Date() + " (ServiceA call count: " + callCount + ")\nCompletely failed to call " + url + " after " + tries + " tries";
+        return "Hello from serviceAFallback at " + new Date() + " (ServiceA call count: " + callCount + ")\nCompletely failed to call B after " + tries + " tries";
     }
 
-    private String callService(StringBuilder url) {
+     private String callService() {
 
         StringBuilder sb = new StringBuilder();
-
         sb.append("Calling service at: ")
             .append(url)
             .append(" (ServiceA call count: " + callCount + ", tries: " + tries)
             .append(")");
-
         System.out.println(sb.toString());
 
         sb.append("\n");
@@ -71,16 +54,13 @@ public class ServiceAEndpoint {
         String result = null;
         
         try {
-          result = ClientBuilder.newClient()
-                            .target(url.toString())
-                            .request(MediaType.TEXT_PLAIN)
-                            .get(String.class);
-        } catch (Exception e) {
+            result = client.hello();
+                        
+          } catch (Exception e) {
           System.out.println("Caught exception");
           e.printStackTrace();
-          throw e;
-        }
-
+          throw new RuntimeException(e);
+        } 
         return sb.append(result).toString();
-    }
+    } 
 }
