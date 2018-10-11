@@ -260,7 +260,8 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <dockerfile.verbose>true</dockerfile.verbose>
+                            <pullNewerImage>false</pullNewerImage>
+                            <verbose>false</verbose>
                             <repository>openliberty-${project.artifactId}</repository>
                             <tag>${project.version}</tag>
                             <buildArgs>
